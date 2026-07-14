@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌸 پروژه Rainbow Connect | حمایت مالی برای ساخت جامعه</title>
+    <style>
+        /* ===== Reset & Variables ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #ff6b9d;
+            --primary-dark: #e0557e;
+            --secondary: #c44dff;
+            --accent: #ffd700;
+            --bg: #0a0a14;
+            --bg-card: #13132b;
+            --bg-card2: #1c1c3d;
+            --text: #f0f0f0;
+            --text-muted: #9a9ab0;
+            --border: #2a2a4a;
+            --gradient: linear-gradient(135deg, #ff6b9d, #c44dff, #6b5bff);
+            --gradient2: linear-gradient(135deg, #ff6b9d, #ffd700);
+            --shadow: 0 8px 40px rgba(255, 107, 157, 0.15);
+            --glass: rgba(255, 255, 255, 0.03);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, 'IRANSans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--gradient); border-radius: 3px; }
+
+        /* ===== Floating particles ===== */
+        .particles {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 6px; height: 6px;
+            background: var(--gradient);
+            border-radius: 50%;
+            opacity: 0.15;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.15; }
+            90% { opacity: 0.15; }
+            100% { transform: translateY(-10vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* ===== Container ===== */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== Header / Hero ===== */
+        .hero {
+            text-align: center;
+            padding: 5rem 0 3rem;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255,107,157,0.1);
+            border: 1px solid rgba(255,107,157,0.3);
+            padding: 6px 20px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            letter-spacing: 1px;
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            font-weight: 900;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero h1 .emoji {
+            -webkit-text-fill-color: initial;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 650px;
+            margin: 0 auto 2rem;
+        }
+
+        .hero-subtitle {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .hero-subtitle span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* ===== Progress Section ===== */
+        .progress-section {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 2.5rem;
+            border: 1px solid var(--border);
+            margin: 2rem 0 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: var(--gradient);
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-title h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .progress-title p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 4px;
+        }
+
+        .progress-amounts {
+            text-align: left;
+            text-align-last: left;
+            direction: ltr;
+        }
+
+        .progress-amounts .collected {
+            font-size: 2rem;
+            font-weight: 900;
+            background: var(--gradient2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .progress-amounts .goal {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            display: block;
+            margin-top: 2px;
+        }
+
+        /* ===== Progress Bar ===== */
+        .progress-bar-track {
+            width: 100%;
+            height: 28px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid var(--border);
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            border-radius: 50px;
+            background: var(--gradient);
+            transition: width 2s ease-out;
+            position: relative;
+            width: 0%;
+        }
+
+        .progress-bar-fill::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            animation: shimmer 2.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .progress-percent {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+            z-index: 2;
+        }
+
+        .progress-details {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .progress-details .donors span {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        /* ===== Milestones ===== */
+        .milestones {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.8rem;
+            margin-top: 1.5rem;
+        }
+
+        .milestone {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .milestone.reached {
+            border-color: var(--primary);
+            background: rgba(255,107,157,0.08);
+        }
+
+        .milestone .amount {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+
+        .milestone.reached .amount {
+            color: var(--primary);
+        }
+
+        .milestone .label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .milestone .check {
+            display: none;
+            color: #00e676;
+            font-size: 1.2rem;
+        }
+
+        .milestone.reached .check {
+            display: block;
+        }
+
+        /* ===== About Project ===== */
+        .section-title {
+            font-size: 2rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            font-size: 1rem;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .about-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.4s;
+        }
+
+        .about-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow);
+        }
+
+        .about-card .icon {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .about-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .about-card p, .about-card ul {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            line-height: 1.8;
+        }
+
+        .about-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .about-card ul li {
+            padding: 4px 0;
+        }
+
+        .about-card ul li::before {
+            content: '✨ ';
+        }
+
+        /* ===== Why Donate ===== */
+        .why-section {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 3rem;
+            border: 1px solid var(--border);
+            margin-bottom: 3rem;
+        }
+
+        .why-section h2 {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .why-item {
+            display: flex;
+            gap: 1.2rem;
+            margin-bottom: 1.5rem;
+            align-items: flex-start;
+        }
+
+        .why-item .num {
+            width: 40px;
+            height: 40px;
+            min-width: 40px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1rem;
+            color: #fff;
+        }
+
+        .why-item h4 {
+            font-size: 1.05rem;
+            margin-bottom: 4px;
+        }
+
+        .why-item p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* ===== Budget Breakdown ===== */
+        .budget-section {
+            margin-bottom: 3rem;
+        }
+
+        .budget-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            margin-bottom: 0.7rem;
+            transition: all 0.3s;
+        }
+
+        .budget-item:hover {
+            border-color: var(--primary);
+        }
+
+        .budget-item .name {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .budget-item .amount {
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .budget-item .bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 4px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .budget-item .bar span {
+            display: block;
+            height: 100%;
+            border-radius: 4px;
+            background: var(--gradient);
+        }
+
+        /* ===== Donate Button Section ===== */
+        .donate-section {
+            text-align: center;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .donate-section h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.8rem;
+        }
+
+        .donate-section p {
+            color: var(--text-muted);
+            max-width: 550px;
+            margin: 0 auto 2rem;
+        }
+
+        .soroush-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #009d8b, #00d4aa);
+            color: #fff;
+            padding: 18px 44px;
+            border-radius: 60px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.4s;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 6px 30px rgba(0, 157, 139, 0.35);
+        }
+
+        .soroush-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 50px rgba(0, 157, 139, 0.5);
+        }
+
+        .soroush-btn svg {
+            width: 28px;
+            height: 28px;
+            fill: currentColor;
+        }
+
+        .donate-note {
+            margin-top: 1.5rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .donate-note a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        /* ===== Testimonials / Supporters ===== */
+        .supporters {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+
+        .supporter {
+            text-align: center;
+        }
+
+        .supporter .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            margin: 0 auto 8px;
+        }
+
+        .supporter .name {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* ===== FAQ ===== */
+        .faq-section {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 2.5rem;
+            border: 1px solid var(--border);
+            margin-bottom: 3rem;
+        }
+
+        .faq-section h2 {
+            text-align: center;
+            font-size: 1.6rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 0;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .faq-question .toggle {
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+            color: var(--primary);
+        }
+
+        .faq-item.open .faq-question .toggle {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+
+        .faq-item.open .faq-answer {
+            max-height: 300px;
+            padding-top: 0.8rem;
+        }
+
+        /* ===== Footer ===== */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.82rem;
+            margin-top: 2rem;
+        }
+
+        footer .hearts {
+            color: var(--primary);
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .hero p { font-size: 1rem; }
+            
+            .about-grid { grid-template-columns: 1fr; }
+            
+            .progress-header { flex-direction: column; text-align: center; }
+            .progress-amounts { text-align: center; }
+            
+            .milestones { grid-template-columns: repeat(2, 1fr); }
+            
+            .why-section { padding: 1.5rem; }
+            .progress-section { padding: 1.5rem; }
+            .faq-section { padding: 1.5rem; }
+
+            .soroush-btn { padding: 14px 30px; font-size: 1rem; }
+        }
+
+        @media (max-width: 480px) {
+            .milestones { grid-template-columns: 1fr 1fr; }
+            .hero-subtitle { flex-direction: column; align-items: center; gap: 0.8rem; }
+        }
+
+        /* ===== Smooth number animation ===== */
+        .animate-number {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== Floating Particles ===== -->
+    <div class="particles" id="particles"></div>
+
+    <!-- ===== Hero ===== -->
+    <section class="hero">
+        <div class="container">
+            <span class="hero-badge">🌈 پروژه حمایت از جامعه رنگین‌کمان</span>
+            <h1>🌺 Rainbow Connect<br>جامعه‌ای برای همه ما</h1>
+            <p>
+                یه پلتفرم دوستیابی و شبکه اجتماعی امن برای فمبوی‌ها، تامبوی‌ها، 
+                ترنس‌ها و همه گرایش‌ها — ساخته شده توسط خودمون، برای خودمون. 💕
+            </p>
+            <div class="hero-subtitle">
+                <span>👥 بدون قضاوت</span>
+                <span>🔒 حریم خصوصی کامل</span>
+                <span>🏳️‍🌈 برای همه گرایش‌ها</span>
+                <span>🇮🇷 فارسی و بین‌المللی</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Progress Bar Section ===== -->
+    <section class="container">
+        <div class="progress-section">
+            <div class="progress-header">
+                <div class="progress-title">
+                    <h2>💰 کمپین حمایت مالی</h2>
+                    <p>با کمک شما این پروژه به واقعیت تبدیل می‌شه 🌸</p>
+                </div>
+                <div class="progress-amounts">
+                    <span class="collected" id="collectedDisplay">۱۰,۰۰۰,۰۰۰</span>
+                    <span class="goal">از هدف <span id="goalDisplay">۱۲,۰۰۰,۰۰۰</span> تومان</span>
+                </div>
+            </div>
+
+            <div class="progress-bar-track">
+                <div class="progress-bar-fill" id="progressFill" style="width: 0%;">
+                    <span class="progress-percent" id="progressPercent">۰%</span>
+                </div>
+            </div>
+
+            <div class="progress-details">
+                <div class="donors">👥 <span id="donorCount">۱۲۷</span> نفر حمایت کردن</div>
+                <div class="days-left">⏳ <span id="daysLeft">۱۸</span> روز تا پایان کمپین</div>
+            </div>
+
+            <!-- Milestones -->
+            <div class="milestones">
+                <div class="milestone reached" data-amount="3000000">
+                    <div class="check">✅</div>
+                    <div class="amount">۳ میلیون</div>
+                    <div class="label">راه‌اندازی اولیه</div>
+                </div>
+                <div class="milestone reached" data-amount="6000000">
+                    <div class="check">✅</div>
+                    <div class="amount">۶ میلیون</div>
+                    <div class="label">هزینه سرور ۶ ماه</div>
+                </div>
+                <div class="milestone reached" data-amount="10000000">
+                    <div class="check">✅</div>
+                    <div class="amount">۱۰ میلیون</div>
+                    <div class="label">توسعه اپلیکیشن</div>
+                </div>
+                <div class="milestone" data-amount="12000000">
+                    <div class="check">✅</div>
+                    <div class="amount">۱۲ میلیون</div>
+                    <div class="label">هدف نهایی 🎯</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== About Project ===== -->
+    <section class="container">
+        <h2 class="section-title">🌸 درباره پروژه</h2>
+        <p class="section-subtitle">چرا Rainbow Connect رو می‌سازیم و چه هدفی داریم؟</p>
+
+        <div class="about-grid">
+            <div class="about-card">
+                <div class="icon">💔</div>
+                <h3>چالش فعلی</h3>
+                <p>
+                    توی ایران و خیلی کشورهای دیگه، افراد با گرایش‌های مختلف 
+                    (فمبوی، تامبوی، ترنس، کوییر و...) هیچ پلتفرم امنی برای 
+                    ارتباط و دوستیابی ندارن. اپ‌های خارجی یا تحریمن، یا امنیت 
+                    ندارن، یا فارسی پشتیبانی نمی‌کنن.
+                </p>
+            </div>
+            <div class="about-card">
+                <div class="icon">💡</div>
+                <h3>راه‌حل ما</h3>
+                <p>
+                    <strong>Rainbow Connect</strong> یه پلتفرم اختصاصی و امنه که:
+                </p>
+                <ul>
+                    <li>دوستان هم‌گرایش پیدا کنی</li>
+                    <li>آشنایی و دوستیابی امن</li>
+                    <li>انجمن و گروه‌های گفتگو</li>
+                    <li>رویدادهای مجازی و آفلاین</li>
+                    <li>حریم خصوصی در اولویت</li>
+                    <li>پشتیبانی کامل فارسی</li>
+                </ul>
+            </div>
+            <div class="about-card">
+                <div class="icon">🎯</div>
+                <h3>مخاطبان پروژه</h3>
+                <ul>
+                    <li>🧝 فمبوی‌های عزیز</li>
+                    <li>💪 تامبوی‌های دوست‌داشتنی</li>
+                    <li>🏳️‍⚧️ ترنس‌ها و نان‌باینری‌ها</li>
+                    <li>🌈 کوییرها و همه گرایش‌ها</li>
+                    <li>🤝 افرادی که به دنبال دوست و همراه هستن</li>
+                </ul>
+            </div>
+            <div class="about-card">
+                <div class="icon">🛡️</div>
+                <h3>امنیت و حریم خصوصی</h3>
+                <ul>
+                    <li>هیچ اطلاعات شخصی الزامی نیست</li>
+                    <li>نام مستعار (Nickname) کافیه</li>
+                    <li>سرور خارج از ایران با رمزنگاری</li>
+                    <li>قابلیت ناشناس موندن کامل</li>
+                    <li>مدیریت محتوای هوشمند</li>
+                    <li>ریپورت و بلاک کردن</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Why Donate ===== -->
+    <section class="container">
+        <div class="why-section">
+            <h2>🌟 چرا حمایت مالی شما مهمه؟</h2>
+
+            <div class="why-item">
+                <div class="num">۱</div>
+                <div>
+                    <h4>هزینه سرور و دامنه</h4>
+                    <p>سرور خارج از ایران با امنیت بالا و رمزنگاری—برای اینکه همیشه در دسترس باشیم.</p>
+                </div>
+            </div>
+            <div class="why-item">
+                <div class="num">۲</div>
+                <div>
+                    <h4>توسعه اپلیکیشن موبایل</h4>
+                    <p>اپ اختصاصی اندروید و آیفون برای دسترسی راحت و خصوصی‌تر.</p>
+                </div>
+            </div>
+            <div class="why-item">
+                <div class="num">۳</div>
+                <div>
+                    <h4>زیرساخت پیام‌رسان امن</h4>
+                    <p>چت رمزگذاری شده سرتاسری (End-to-End) مثل سگنال، اما مخصوص خودمون.</p>
+                </div>
+            </div>
+            <div class="why-item">
+                <div class="num">۴</div>
+                <div>
+                    <h4>توسعه و نگهداری</h4>
+                    <p>بروزرسانی، رفع باگ، افزودن ویژگی‌های جدید و پشتیبانی فنی مداوم.</p>
+                </div>
+            </div>
+            <div class="why-item">
+                <div class="num">۵</div>
+                <div>
+                    <h4>محتوا و انجمن</h4>
+                    <p>ساخت انجمن، رویدادهای آنلاین، تولید محتوای آموزشی و فرهنگی.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Budget Breakdown ===== -->
+    <section class="container budget-section">
+        <h2 class="section-title">📊 بودجه‌بندی پروژه</h2>
+        <p class="section-subtitle">پول جمع‌آوری شده کجا خرج می‌شه؟</p>
+
+        <div class="budget-item">
+            <div class="name">🖥️ سرور و هاست خارجی (۱۲ ماه)</div>
+            <div class="amount">-</div>
+        </div>
+        <div class="budget-item">
+            <div class="name">📱 توسعه اپلیکیشن موبایل</div>
+            <div class="amount">-</div>
+        </div>
+        <div class="budget-item">
+            <div class="name">🔐 پیام‌رسان رمزگذاری شده</div>
+            <div class="amount">-</div>
+        </div>
+        <div class="budget-item">
+            <div class="name">🎨 طراحی و UI/UX</div>
+            <div class="amount">-</div>
+        </div>
+        <div class="budget-item">
+            <div class="name">📢 بازاریابی و اطلاع‌رسانی</div>
+            <div class="amount">-</div>
+        </div>
+        <div class="budget-item">
+            <div class="name">⚖️ هزینه‌های حقوقی و ثبت</div>
+            <div class="amount">-</div>
+        </div>
+    </section>
+
+    <!-- ===== Donate CTA ===== -->
+    <section class="container">
+        <div class="donate-section">
+            <h2>💖 برای ساخت این جامعه به ما کمک کن</h2>
+            <p>
+                هر مبلغی که می‌تونید کمک کنید، حتی ۵۰ هزار تومان هم تأثیر داره! 
+                با هم می‌تونیم این جامعه رو بسازیم. 🌈
+            </p>
+            <a href="https://splus.ir/joingroup/AV-Nuta1AhtJ64YOGNWZMQ" target="_blank" class="soroush-btn">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+                </svg>
+                💬 پیام در سروش برای دونیت
+            </a>
+            <div class="donate-note">
+                ⚡ بعد از کلیک، توی سروش بهمون پیام بدید <strong>"دونیت"</strong> 
+                — راهنماییتون می‌کنیم 🌸<br>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Supporters ===== -->
+    <section class="container">
+        <h2 class="section-title">🌟 حامیان پروژه</h2>
+        <p class="section-subtitle">از همه کسایی که تا حالا حمایت کردن ممنونیم 💕</p>
+        <div class="supporters" id="supportersList">
+            <!-- Generated by JS -->
+        </div>
+        <div style="text-align: center; margin-top: 1.5rem; padding: 1.5rem; background: rgba(255,107,157,0.05); border-radius: 16px; border: 1px solid rgba(255,107,157,0.15);">
+            <p style="color: var(--text); font-size: 1rem;">
+                🌟 <strong>اگر شما هم دونیت کنید</strong>، نام شما در لیست حامیان قرار می‌گیره و ازتون تقدیر و تشکر می‌شه 💕<br>
+                <span style="color: var(--text-muted); font-size: 0.9rem;">با حمایت شما، این جامعه بزرگ‌تر و امن‌تر می‌شه. هر کمکی، حتی کوچیک، ارزشمنده! 🌈✨</span>
+            </p>
+        </div>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section class="container">
+        <div class="faq-section">
+            <h2>❓ سوالات متداول</h2>
+
+            <div class="faq-item open">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>این پلتفرم برای کیه؟</span>
+                    <span class="toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    برای همه افراد جامعه LGBTQ+ و بخصوص فمبوی‌ها، تامبوی‌ها، ترنس‌ها، 
+                    نان‌باینری‌ها و هر کسی که به دنبال یه فضای امن برای دوستی و ارتباطه.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>آیا اطلاعات من محفوظ می‌مونه؟</span>
+                    <span class="toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    کاملاً. ما هیچ اطلاعات شخصی واقعی (شماره تماس، اسم واقعی، آدرس) رو 
+                    ذخیره نمی‌کنیم. همه چیز با نام مستعار و رمزگذاری شده س.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>چطور می‌تونم کمک کنم؟</span>
+                    <span class="toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    با دونیت مالی، معرفی پروژه به دوستاتون، یا حتی پیشنهادات فنی و ایده‌های جدید. 
+                    هر کمکی مهمه! برای دونیت از دکمه سروش استفاده کنید.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>کی راه می‌افته؟</span>
+                    <span class="toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    بعد از رسیدن به ۷۰٪ هدف (حدود ۸ میلیون) فاز آزمایشی رو شروع می‌کنیم. 
+                    با رسیدن به هدف کامل، نسخه رسمی رو منتشر می‌کنیم.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>آیا برای استفاده نیاز به پرداخت دارم؟</span>
+                    <span class="toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    نه! استفاده از Rainbow Connect کاملاً رایگانه. 
+                    دونیت‌ها فقط برای هزینه‌های سرور و توسعه استفاده می‌شه.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Footer ===== -->
+    <footer>
+        <p>
+            🌈 ساخته شده با <span class="hearts">❤️</span> برای همه رنگ‌های عشق<br>
+            Rainbow Connect &mdash; جایی برای بودن خود واقعی‌ات 🌸
+        </p>
+    </footer>
+
+    <script>
+        // ================================================
+        // ⚙️ تنظیمات رو اینجا تغییر بده:
+        // ================================================
+        
+        const CONFIG = {
+            GOAL: 12000000,           // 🎯 هدف نهایی به تومان
+            COLLECTED: 200000,       // 💰 مبلغ جمع‌آوری شده فعلی
+            DONOR_COUNT: 1,         // 👥 تعداد دونیت‌کننده‌ها
+            DAYS_LEFT: '—',            // ⏳ روزهای باقی‌مونده
+            // نام حامیان تصادفی (برای نمایش)
+            SUPPORTERS: [
+                { name: 'ABOLII (TOP)', emoji: '🥱' },
+            ]
+        };
+
+        // ================================================
+        // 🎯 پیشرفت نوار به صورت هوشمند
+        // ================================================
+        
+        function updateProgress() {
+            const percent = Math.min((CONFIG.COLLECTED / CONFIG.GOAL) * 100, 100);
+            
+            const fill = document.getElementById('progressFill');
+            const percentLabel = document.getElementById('progressPercent');
+            const collectedDisplay = document.getElementById('collectedDisplay');
+            const goalDisplay = document.getElementById('goalDisplay');
+            const donorCount = document.getElementById('donorCount');
+            const daysLeft = document.getElementById('daysLeft');
+
+            // Format numbers
+            function formatNum(n) {
+                return n.toLocaleString('fa-IR');
+            }
+
+            collectedDisplay.textContent = formatNum(CONFIG.COLLECTED);
+            goalDisplay.textContent = formatNum(CONFIG.GOAL);
+            donorCount.textContent = CONFIG.DONOR_COUNT;
+            if (typeof CONFIG.DAYS_LEFT === 'string') {
+                daysLeft.textContent = CONFIG.DAYS_LEFT;
+                daysLeft.parentElement.innerHTML = '⏳ ' + CONFIG.DAYS_LEFT;
+            } else {
+                daysLeft.textContent = CONFIG.DAYS_LEFT;
+            }
+
+            // Animate progress bar
+            setTimeout(() => {
+                fill.style.width = percent + '%';
+                percentLabel.textContent = percent.toFixed(1) + '%';
+            }, 300);
+
+            // Update milestones
+            const milestones = document.querySelectorAll('.milestone');
+            milestones.forEach(m => {
+                const amount = parseInt(m.dataset.amount);
+                if (CONFIG.COLLECTED >= amount) {
+                    m.classList.add('reached');
+                } else {
+                    m.classList.remove('reached');
+                }
+            });
+        }
+
+        // ================================================
+        // 👥 نمایش حامیان
+        // ================================================
+        
+        function renderSupporters() {
+            const container = document.getElementById('supportersList');
+            const shuffled = [...CONFIG.SUPPORTERS].sort(() => Math.random() - 0.5);
+            container.innerHTML = shuffled.map(s => `
+                <div class="supporter">
+                    <div class="avatar">${s.emoji}</div>
+                    <div class="name">${s.name}</div>
+                </div>
+            `).join('');
+        }
+
+        // ================================================
+        // ❓ FAQ Toggle
+        // ================================================
+        
+        function toggleFaq(element) {
+            const item = element.closest('.faq-item');
+            item.classList.toggle('open');
+        }
+
+        // ================================================
+        // ✨ Particles
+        // ================================================
+        
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const colors = ['#ff6b9d', '#c44dff', '#6b5bff', '#ffd700', '#00d4aa'];
+            
+            for (let i = 0; i < 30; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.width = p.style.height = (Math.random() * 4 + 3) + 'px';
+                p.style.animationDuration = (Math.random() * 20 + 15) + 's';
+                p.style.animationDelay = (Math.random() * 20) + 's';
+                p.style.background = colors[Math.floor(Math.random() * colors.length)];
+                container.appendChild(p);
+            }
+        }
+
+        // ================================================
+        // 🚀 Init
+        // ================================================
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            updateProgress();
+            renderSupporters();
+            createParticles();
+        });
+    </script>
+
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a1b115b95f82c395',t:'MTc4NDAzNzk1Mw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
